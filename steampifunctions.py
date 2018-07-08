@@ -2,7 +2,7 @@ import requests
 import json
 from collections import Counter
 
-STEAM_API_KEY = '4B49A370474D2FF3930407D3BDEC78B2'
+STEAM_API_KEY = ''
 
 def get_steam_id(STEAM_USERNAME):
 	STEAM_ID_URL = 'http://api.steampowered.com/ISteamUser/ResolveVanityURL/v0001/?key=4B49A370474D2FF3930407D3BDEC78B2&vanityurl=' + str(STEAM_USERNAME)
