@@ -14,14 +14,6 @@ app.secret_key = 'lol'
 def my_form():
     return render_template('index.html')
 
-# @app.route('/', methods=['POST'])
-# def my_form_post():
-#     text = request.form['text']
-#     if int(text)<2:
-#     	return "You can't compare less than two people retard"
-#     else:
-# 		return text.upper() + " people"
-
 @app.route('/twopeople')
 def twopeople():
 	return render_template('twopeople.html')
@@ -37,11 +29,13 @@ def compare_two():
 	steamids = []
 	
 	names.extend([request.form['name1'], request.form['name2']])
+	
 	try:
 		for i in range(len(names)):
 			steamids.append(p.get_steam_id(names[i]))
 	except KeyError:
 		return render_template('errorpage.html')
+	
 	steamid = [str(item) for item in steamids]
 	games_for_first = p.get_games(int(steamid[0]))
 	games_for_second = p.get_games(int(steamid[1]))
@@ -59,8 +53,6 @@ def compare_two():
 		return render_template('displayresults.html', game_list=p.get_game_name(display))
 	else:
 		return render_template('displayresults.html', game_list=p.get_game_name(elements))
-
-	number_of_games = [len(elements)]
 
 @app.route('/threepeople')
 def threepeople():
@@ -94,10 +86,13 @@ def compare_three():
 
 	same_games_ints = [str(item) + "\n" for item in same_games_strings]
 	elements = p.get_id_position(same_games_ints)
+	display = []
 	
-	return render_template('displayresults.html', game_list=p.get_game_name(elements))
-
-
+	if int(session.get('visits'))>1:
+		display = elements[:(len(elements)/(int(session.get('visits'))))]
+		return render_template('displayresults.html', game_list=p.get_game_name(display))
+	else:
+		return render_template('displayresults.html', game_list=p.get_game_name(elements))
 
 if __name__=="__main__":
     app.run(debug=True)
