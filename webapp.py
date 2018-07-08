@@ -12,7 +12,7 @@ app.secret_key = 'lol'
 
 @app.route('/')
 def my_form():
-    return render_template('home.html')
+    return render_template('index.html')
 
 # @app.route('/', methods=['POST'])
 # def my_form_post():
