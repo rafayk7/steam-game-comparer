@@ -20,6 +20,7 @@ def twopeople():
 
 @app.route('/twopeople', methods=['POST'])
 def compare_two():
+	#TODO: Use JWT instead of sessions
 	if 'visits' in session:
 		session['visits'] = session.get('visits') + 1
 	else:
